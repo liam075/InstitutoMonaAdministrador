@@ -25,6 +25,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('apellido');
+            $table->string('documento_identidad');
             $table->date('fecha_nacimiento');
             $table->string('direccion');
             $table->string('usuario');

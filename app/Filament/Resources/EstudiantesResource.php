@@ -23,50 +23,30 @@ class EstudiantesResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')->maxLength(100)->required(),
-                Forms\Components\TextInput::make('apellido')->maxLength(100)->required(),
-                Forms\Components\TextInput::make('documento_identidad')->maxLength(20)->required(),
+                Forms\Components\TextInput::make('nombre')->label('Nombres')->maxLength(100)->required(),
+                Forms\Components\TextInput::make('apellido')->label('Apellidos')->maxLength(100)->required(),
+                Forms\Components\TextInput::make('documento_identidad')->label('Documento de Identidad')->maxLength(20)->required(),
+                Forms\Components\DatePicker::make('fecha_nacimiento')->maxDate(now())->required(),
                 Forms\Components\TextInput::make('correo_electronico')->email()->maxLength(100)->required(),
                 Forms\Components\TextInput::make('telefono')->maxLength(10)->required(),
                 Forms\Components\TextInput::make('telefono_emergencia')->maxLength(10)->required(),
-                Forms\Components\Select::make('enfermedad')->options([
+                Forms\Components\Select::make('enfermedad')->label('Tiene una Enfermedad?')->options([
                     'Si' => 'Si',
                     'No' => 'No',
-                ])->required(),
-                Forms\Components\Select::make('tipo_pago')->options([
+                ])->searchable()->preload()->required(),
+                Forms\Components\Select::make('tipo_pago')->label('Tipo de Pago')->options([
                     'Zelle' => 'Zelle',
                     'Transferencia Bancaria' => 'Transferencia Bancaria',
                     'Paypal' => 'Paypal',
                     'Stripe' => 'Stipe',
-                ])->required(),
+                ])->searchable()->preload()->required(),
                 Forms\Components\Select::make('kardek')->options([
                     'Si' => 'Si',
                     'No' => 'No',
-                ])->required(),
-                Forms\Components\Select::make('carrera')->options([
-                    '1' => 'Carrera de Maquillaje',
-                    '2' => 'Carrera de Peinado',
-                    '3' => 'Carrera de Uñas',
-                    '4' => 'Carrera de Facial',
-                ])->required(),
-                Forms\Components\Select::make('materia')->options([
-                    '1' => 'Maquillaje 1',
-                    '2' => 'Maquillaje 2',
-                    '3' => 'Maquillaje 3',
-                    '4' => 'Peinado 1',
-                    '5' => 'Peinado 2',
-                    '6' => 'Peinado 3',
-
-                ])->required(),
-                Forms\Components\Select::make('curso')->options([
-                    '1' => 'Maquillaje 1',
-                    '2' => 'Maquillaje 2',
-                    '3' => 'Maquillaje 3',
-                    '4' => 'Peinado 1',
-                    '5' => 'Peinado 2',
-                    '6' => 'Peinado 3',
-
-                ])->required(),
+                ])->searchable()->preload()->required(),
+                Forms\Components\Select::make('carreras_id')->label('Carreras')->relationship('carreras','nombre')->searchable()->preload()->columnSpanFull()->required(),
+                Forms\Components\Select::make('materias_id')->label('Materias')->relationship('materias','nombre')->searchable()->preload()->columnSpanFull()->required(),
+                Forms\Components\Select::make('cursos_id')->label('Cursos')->relationship('cursos','titulo')->searchable()->preload()->columnSpanFull()->required(),
                 Forms\Components\Textarea::make('direccion')->maxLength(500)->columnSpanFull()->required(),
             ]);
     }
@@ -77,16 +57,16 @@ class EstudiantesResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nombre')->searchable(),
                 Tables\Columns\TextColumn::make('apellido')->searchable(),
-                Tables\Columns\TextColumn::make('documento_identidad')->searchable(),
+                Tables\Columns\TextColumn::make('documento_identidad')->label('Documento de Identidad')->searchable(),
                 Tables\Columns\TextColumn::make('correo_electronico')->searchable(),
                 Tables\Columns\TextColumn::make('telefono')->searchable(),
                 Tables\Columns\TextColumn::make('telefono_emergencia')->searchable(),
                 Tables\Columns\TextColumn::make('enfermedad')->label('Tiene una Enfermedad?'),
                 Tables\Columns\TextColumn::make('tipo_pago')->searchable(),
                 Tables\Columns\TextColumn::make('kardek'),
-                Tables\Columns\TextColumn::make('carrera')->searchable(),
-                Tables\Columns\TextColumn::make('materia')->searchable(),
-                Tables\Columns\TextColumn::make('curso')->searchable(),
+                Tables\Columns\TextColumn::make('carreras.nombre')->label('Carreras')->searchable(),
+                Tables\Columns\TextColumn::make('materias.nombre')->label('Materias')->searchable(),
+                Tables\Columns\TextColumn::make('cursos.titulo')->label('Cursos')->searchable(),
                 Tables\Columns\TextColumn::make('direccion'),
             ])
             ->filters([

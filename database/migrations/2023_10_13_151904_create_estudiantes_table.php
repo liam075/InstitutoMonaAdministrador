@@ -36,9 +36,10 @@ return new class extends Migration
             $table->string('enfermedad');
             $table->string('telefono_emergencia');
             $table->string('tipo_pago');
-            $table->foreignId('carrera_id')->consrained('carreras')->cascadeOnDelete();
-            $table->foreignId('materias_id')->consrained('materias')->cascadeOnDelete();;
-            $table->foreignId('cursos_id')->consrained('cursos')->cascadeOnDelete();;
+            $table->string('kardek');
+            $table->foreignId('carreras_id')->consrained('carreras')->cascadeOnDelete();
+            $table->foreignId('materias_id')->consrained('materias')->cascadeOnDelete();
+            $table->foreignId('cursos_id')->consrained('cursos')->cascadeOnDelete();
             $table->timestamps();
         });
     }

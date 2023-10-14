@@ -23,13 +23,13 @@ class VentasResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('vendedor_id')->label('Vendedores')->relationship('vendedores','nombre')->searchable()->preload()->required(),
+                Forms\Components\Select::make('vendedores_id')->label('Vendedores')->relationship('vendedores','nombre')->searchable()->preload()->required(),
                 Forms\Components\Select::make('estudiantes_id')->relationship('estudiantes','nombre')->searchable()->preload()->required(),
                 Forms\Components\TextInput::make('comprobante_venta')->maxLength(20)->required(),
                 Forms\Components\DatePicker::make('fecha_venta')->label('Fecha Venta')->maxDate(now())->required(),
-                Forms\Components\Select::make('carreras_id')->relationship('cursos','titulo')->searchable()->preload()->required(),
-                Forms\Components\Select::make('materias_id')->relationship('cursos','titulo')->searchable()->preload()->required(),
-                Forms\Components\Select::make('cursos_id')->relationship('cursos','titulo')->searchable()->preload()->required(),
+                Forms\Components\Select::make('carreras_id')->label('Carreras')->relationship('carreras','nombre')->searchable()->preload()->required(),
+                Forms\Components\Select::make('materias_id')->label('Materias')->relationship('materias','nombre')->searchable()->preload()->required(),
+                Forms\Components\Select::make('cursos_id')->label('Cursos')->relationship('cursos','titulo')->searchable()->preload()->required(),
 
                 Forms\Components\Select::make('se_entero')->label('Como se Entero?')->options([
                     'Facebook' => 'Facebook',
@@ -46,7 +46,7 @@ class VentasResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('vendedor.nombre')->label('Vendedor')->searchable(),
+                Tables\Columns\TextColumn::make('vendedores.nombre')->label('Vendedor')->searchable(),
                 Tables\Columns\TextColumn::make('estudiantes.nombre')->label('Estudiantes')->searchable(),
                 Tables\Columns\TextColumn::make('comprobante_venta')->searchable(),
                 Tables\Columns\TextColumn::make('fecha_venta')->searchable(),

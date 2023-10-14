@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('descripcion');
             $table->string('status');
-            $table->foreignId('users_id')->consrained('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->consrained('users')->cascadeOnDelete();
             $table->string('post-name');
             $table->string('post-type');
             $table->timestamps();

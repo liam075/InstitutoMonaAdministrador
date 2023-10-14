@@ -30,9 +30,12 @@ class CursosResource extends Resource
                     'Cancelado' => 'Cancelado',
                 ])->searchable()->preload()->required(),
                 Forms\Components\TextInput::make('descripcion')->maxLength(100)->required(),
-                Forms\Components\TextInput::make('id_user')->maxLength(20)->required(),
+                Forms\Components\Select::make('user_id')->relationship('user','name')->searchable()->preload()->required(),
+
                 Forms\Components\TextInput::make('post-name')->maxLength(50)->required(),
-                Forms\Components\TextInput::make('post-type')->maxLength(50)->required(),
+                Forms\Components\Select::make('post-type')->label('Post Type')->options([
+                    'courses' => 'courses',
+                ])->searchable()->preload()->required(),
             ]);
     }
 
