@@ -85,4 +85,11 @@ class VentasResource extends Resource
             'edit' => Pages\EditVentas::route('/{record}/edit'),
         ];
     }
+
+    public static function getWidgets(): array
+    {
+        return [
+            VentasResource\Widgets\VentasChart::class
+        ];
+    }
 }
