@@ -68,8 +68,8 @@ class CarrerasResource extends Resource
     {
         return [
             'index' => Pages\ListCarreras::route('/'),
-            'create' => Pages\CreateCarreras::route('/create'),
-            'edit' => Pages\EditCarreras::route('/{record}/edit'),
+            //'create' => Pages\CreateCarreras::route('/create'),
+            //'edit' => Pages\EditCarreras::route('/{record}/edit'),
         ];
     }
 }

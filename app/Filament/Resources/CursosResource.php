@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class CursosResource extends Resource
 {
@@ -58,6 +59,7 @@ class CursosResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make(),
                 ]),
             ])
             ->emptyStateActions([
@@ -78,6 +80,13 @@ class CursosResource extends Resource
             'index' => Pages\ListCursos::route('/'),
             'create' => Pages\CreateCursos::route('/create'),
             'edit' => Pages\EditCursos::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            CursosResource\Widgets\CursosOverview::class,
         ];
     }
 }
