@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use App\Filament\Resources\CursosResource\Pages;
+use App\Filament\Resources\CursosResource\RelationManagers;
+use App\Models\Cursos;
+use Filament\Forms;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+
+class CursosResource extends Resource
+{
+    protected static ?string $model = Cursos::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                Forms\Components\TextInput::make('titulo')->maxLength(70)->required(),
+                Forms\Components\Select::make('status')->label('Status')->options([
+                    'Activo' => 'Activo',
+                    'Suspendido' => 'Suspendido',
+                    'Cancelado' => 'Cancelado',
+                ])->searchable()->preload()->required(),
+                Forms\Components\TextInput::make('descripcion')->maxLength(100)->required(),
+                Forms\Components\Select::make('user_id')->relationship('user','name')->searchable()->preload()->required(),
+
+                Forms\Components\TextInput::make('post-name')->maxLength(50)->required(),
+                Forms\Components\Select::make('post-type')->label('Post Type')->options([
+                    'courses' => 'courses',
+                ])->searchable()->preload()->required(),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('titulo')->searchable(),
+                Tables\Columns\TextColumn::make('descripcion')->searchable(),
+                Tables\Columns\TextColumn::make('status')->searchable(),
+                Tables\Columns\TextColumn::make('post-name')->searchable(),
+                Tables\Columns\TextColumn::make('post-type')->searchable(),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                    ExportBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListCursos::route('/'),
+            'create' => Pages\CreateCursos::route('/create'),
+            'edit' => Pages\EditCursos::route('/{record}/edit'),
+        ];
+    }
+}
